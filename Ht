@@ -1,1 +1,455 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Racing News - Portal Berita Formula 1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        }
+
+        header {
+            background: linear-gradient(135deg, #e10600 0%, #8b0000 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 4px 15px rgba(225, 6, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 2px;
+        }
+
+        nav {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem 0;
+            margin-top: 1rem;
+            border-radius: 10px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><rect fill="%23222" width="1200" height="400"/><path fill="%23e10600" d="M0,200 Q300,150 600,200 T1200,200 L1200,400 L0,400 Z" opacity="0.3"/></svg>');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 5rem 2rem;
+            margin: 2rem 0;
+            border-radius: 15px;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
+        }
+
+        .content-section {
+            background: white;
+            margin: 2rem 0;
+            padding: 3rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .content-section h2 {
+            color: #e10600;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #e10600;
+            padding-bottom: 0.5rem;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .news-card {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(225, 6, 0, 0.3);
+        }
+
+        .news-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #e10600 0%, #333 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .news-content {
+            padding: 1.5rem;
+        }
+
+        .news-content h3 {
+            color: #e10600;
+            margin-bottom: 0.5rem;
+        }
+
+        .news-date {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #fff3f3 0%, #ffe0e0 100%);
+            padding: 2rem;
+            border-radius: 10px;
+            border-left: 5px solid #e10600;
+            margin: 2rem 0;
+        }
+
+        .info-box h3 {
+            color: #e10600;
+            margin-bottom: 1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #e10600 0%, #8b0000 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-radius: 15px 15px 0 0;
+        }
+
+        footer a {
+            color: #e10600;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .news-grid, .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🏎️ F1 RACING NEWS</h1>
+            <nav>
+                <ul>
+                    <li><a href="#home">Beranda</a></li>
+                    <li><a href="#news">Berita Terkini</a></li>
+                    <li><a href="#standings">Klasemen</a></li>
+                    <li><a href="#about">Tentang F1</a></li>
+                    <li><a href="#contact">Kontak</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <section id="home" class="hero">
+            <h2>Selamat Datang di Dunia Formula 1</h2>
+            <p>Portal berita terlengkap untuk mengikuti perkembangan balapan Formula 1 dari seluruh dunia. Dapatkan informasi terkini tentang tim, pembalap, dan hasil race setiap minggunya!</p>
+        </section>
+
+        <section id="news" class="content-section">
+            <h2>📰 Berita Terkini Formula 1</h2>
+            
+            <div class="news-grid">
+                <div class="news-card">
+                    <div class="news-image">🏁</div>
+                    <div class="news-content">
+                        <div class="news-date">15 Desember 2025</div>
+                        <h3>Verstappen Raih Juara Dunia Keempat</h3>
+                        <p>Max Verstappen berhasil mengamankan gelar juara dunia keempatnya secara berturut-turut setelah kemenangan dominan di musim 2025.</p>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <div class="news-image">🏆</div>
+                    <div class="news-content">
+                        <div class="news-date">12 Desember 2025</div>
+                        <h3>Ferrari Juara Konstruktor</h3>
+                        <p>Scuderia Ferrari merebut kembali titel juara konstruktor setelah paceklik 16 tahun, mengalahkan Red Bull di race terakhir.</p>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <div class="news-image">🚗</div>
+                    <div class="news-content">
+                        <div class="news-date">10 Desember 2025</div>
+                        <h3>Regulasi Baru 2026 Diumumkan</h3>
+                        <p>FIA mengumumkan regulasi baru untuk musim 2026 yang mencakup mesin hybrid baru dan perubahan aerodinamika signifikan.</p>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <div class="news-image">⚡</div>
+                    <div class="news-content">
+                        <div class="news-date">8 Desember 2025</div>
+                        <h3>Hamilton Perpanjang Kontrak</h3>
+                        <p>Lewis Hamilton mengonfirmasi perpanjangan kontrak dengan Mercedes untuk dua musim mendatang, menargetkan gelar ke-8.</p>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <div class="news-image">🎯</div>
+                    <div class="news-content">
+                        <div class="news-date">5 Desember 2025</div>
+                        <h3>Rookie Terbaik Musim Ini</h3>
+                        <p>Andrea Kimi Antonelli dari Mercedes dinobatkan sebagai rookie terbaik 2025 dengan pencapaian 3 podium di musim debutnya.</p>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <div class="news-image">🌍</div>
+                    <div class="news-content">
+                        <div class="news-date">2 Desember 2025</div>
+                        <h3>Sirkuit Baru di Afrika</h3>
+                        <p>Formula 1 mengumumkan penambahan sirkuit baru di Afrika Selatan yang akan menjadi tuan rumah Grand Prix mulai 2026.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="standings" class="content-section">
+            <h2>🏆 Klasemen Musim 2025</h2>
+            
+            <div class="info-box">
+                <h3>Klasemen Pembalap</h3>
+                <ol style="line-height: 2;">
+                    <li><strong>Max Verstappen</strong> (Red Bull Racing) - 487 poin</li>
+                    <li><strong>Charles Leclerc</strong> (Ferrari) - 456 poin</li>
+                    <li><strong>Lando Norris</strong> (McLaren) - 421 poin</li>
+                    <li><strong>Lewis Hamilton</strong> (Mercedes) - 398 poin</li>
+                    <li><strong>Carlos Sainz</strong> (Ferrari) - 376 poin</li>
+                </ol>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">24</div>
+                    <div>Total Race</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">10</div>
+                    <div>Tim Konstruktor</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">20</div>
+                    <div>Pembalap</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">15</div>
+                    <div>Race Winner Berbeda</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="content-section">
+            <h2>🏎️ Tentang Formula 1</h2>
+            
+            <p style="margin-bottom: 1.5rem;">
+                Formula 1 adalah kelas tertinggi dari balap mobil roda terbuka internasional yang disetujui oleh Fédération Internationale de l'Automobile (FIA). Kejuaraan Dunia Formula Satu telah menjadi salah satu bentuk balap yang paling bergengsi di dunia sejak musim perdananya pada tahun 1950.
+            </p>
+
+            <div class="info-box">
+                <h3>Sejarah Singkat</h3>
+                <p>
+                    Formula 1 dimulai pada tahun 1950 dengan Giuseppe Farina menjadi juara dunia pertama. Sejak saat itu, olahraga ini telah berkembang menjadi spektakel global dengan teknologi tercanggih dan pembalap terbaik dari seluruh dunia. Dari era dominasi Michael Schumacher hingga rivalry Hamilton-Verstappen modern, F1 terus menjadi puncak motorsport dunia.
+                </p>
+            </div>
+
+            <div class="info-box">
+                <h3>Teknologi dan Inovasi</h3>
+                <p>
+                    Mobil F1 modern adalah keajaiban teknologi yang mampu mencapai kecepatan lebih dari 350 km/jam. Dengan power unit hybrid yang kompleks, aerodinamika canggih, dan sistem telemetri real-time, setiap mobil adalah laboratorium bergerak yang mendorong batas inovasi otomotif.
+                </p>
+            </div>
+
+            <div class="info-box">
+                <h3>Tim Legendaris</h3>
+                <p>
+                    <strong>Ferrari</strong> - Tim tertua dan paling sukses dengan 16 gelar konstruktor<br>
+                    <strong>Mercedes</strong> - Dominan di era hybrid dengan 8 gelar berturut-turut<br>
+                    <strong>Red Bull Racing</strong> - Kekuatan baru dengan 6 gelar konstruktor<br>
+                    <strong>McLaren</strong> - Tim ikonik dengan warisan kemenangan yang kaya<br>
+                    <strong>Williams</strong> - Legenda 90an dengan 9 gelar konstruktor
+                </p>
+            </div>
+        </section>
+
+        <section id="contact" class="content-section">
+            <h2>📧 Hubungi Kami</h2>
+            
+            <p style="margin-bottom: 1rem;">
+                Tertarik untuk berkontribusi atau memiliki informasi menarik tentang dunia Formula 1? Hubungi kami melalui:
+            </p>
+            
+            <div class="info-box">
+                <p><strong>Email:</strong> info@f1racingnews.com</p>
+                <p><strong>Twitter:</strong> @F1RacingNews</p>
+                <p><strong>Instagram:</strong> @f1racingnews_official</p>
+                <p><strong>YouTube:</strong> F1 Racing News Channel</p>
+            </div>
+
+            <p style="margin-top: 1.5rem; color: #666;">
+                Kami membuka kesempatan bagi jurnalis dan fotografer yang passionate dengan Formula 1 untuk bergabung dengan tim kami. Kirimkan portofolio Anda ke career@f1racingnews.com
+            </p>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 F1 Racing News. All Rights Reserved.</p>
+            <p style="margin-top: 0.5rem;">
+                Portal berita independen yang tidak berafiliasi dengan Formula 1® | 
+                <a href="#home">Kembali ke Atas</a>
+            </p>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: #999;">
+                Dibuat dengan ❤️ untuk para penggemar Formula 1 di seluruh dunia
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling untuk navigasi
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animasi saat scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '0';
+                    entry.target.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        entry.target.style.transition = 'all 0.6s ease';
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, 100);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.news-card, .stat-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
